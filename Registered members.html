@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員註冊</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+
+<body>
+    <div class="register-container">
+        <h1>註冊會員</h1>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" id="name" name="name" placeholder="請輸入您的姓名" required>
+            </div>
+            <div class="form-group">
+                <label for="email">電子郵件</label>
+                <input type="email" id="email" name="email" placeholder="請輸入您的電子郵件" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密碼</label>
+                <input type="password" id="password" name="password" placeholder="請輸入密碼" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">確認密碼</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="再次輸入密碼" required>
+            </div>
+            <button type="submit">註冊</button>
+        </form>
+        <p class="login-link">已經有帳號了嗎？<a href="file:///F:/%E6%9C%9F%E6%9C%AB%E5%B0%88%E6%A1%88/member.html">點擊這裡登入</a></p>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('密碼不一致，請重新輸入！');
+            } else {
+                alert('註冊成功！');
+                // 提交到伺服器
+                // window.location.href = "success.html"; // 跳轉到成功頁面
+            }
+        });
+    </script>
+</body>
+
+</html>

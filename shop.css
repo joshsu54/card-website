@@ -1,0 +1,151 @@
+/* 設定基本的樣式 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* 購物車容器 */
+.cart-container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 購物車標題 */
+.cart-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 購物車項目 */
+.cart-items {
+    margin-bottom: 20px;
+}
+
+/* 單個商品項目 */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+/* 商品圖片 */
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* 商品詳細資料 */
+.item-details {
+    flex-grow: 1;
+    padding: 0 20px;
+}
+
+.item-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.item-details p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* 數量調整區 */
+.quantity {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    background-color: #c41f33;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0 5px;
+    border-radius: 4px;
+}
+
+.quantity-btn:hover {
+    background-color: #a51a28;
+}
+
+.quantity-input {
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    font-size: 1rem;
+    margin: 0 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* 單項商品總計 */
+.item-total {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 移除商品按鈕 */
+.remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.remove-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* 購物車總結 */
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-top: 2px solid #ddd;
+}
+
+.cart-summary h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.cart-summary p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.checkout-btn {
+    background-color: #c41f33;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.checkout-btn:hover {
+    background-color: #a51a28;
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結帳頁面</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .checkout-container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+        }
+
+        input[type="text"],
+        select,
+        input[type="number"],
+        .btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            background-color: #c41f33;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .summary {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="checkout-container">
+        <h2>結帳</h2>
+
+        <!-- 優惠碼輸入框 -->
+        <div class="form-group">
+            <label for="discountCode">優惠碼</label>
+            <input type="text" id="discountCode" placeholder="輸入優惠碼">
+        </div>
+
+        <!-- 付款方式選擇 -->
+        <div class="form-group">
+            <label for="paymentMethod">選擇付款方式</label>
+            <select id="paymentMethod">
+                <option value="creditCard">信用卡</option>
+                <option value="paypal">PayPal</option>
+                <option value="bankTransfer">銀行轉帳</option>
+                <option value="cashOnDelivery">貨到付款</option>
+                <option value="convenienceStore">超商付款</option>
+            </select>
+        </div>
+
+        <!-- 領取方式選擇 -->
+        <div class="form-group">
+            <label for="pickupMethod">選擇領取方式</label>
+            <select id="pickupMethod" onchange="togglePickupDetails()">
+                <option value="none">選擇領取方式</option>
+                <option value="delivery">宅配</option>
+                <option value="convenienceStore">超商領取</option>
+                <option value="storePickup">實體店面領取</option>
+            </select>
+        </div>
+
+        <!-- 顯示固定店面地址 -->
+        <div id="pickupDetails" class="pickup-details" style="display: none;">
+            <div class="form-group">
+                <label for="pickupLocation">選擇領取店面</label>
+                <input type="text" id="pickupLocation" value="桃園市中壢區普忠路206號" disabled>
+            </div>
+        </div>
+
+        <!-- 提交訂單 -->
+        <div class="form-group">
+            <button class="btn" onclick="submitOrder()">提交訂單</button>
+        </div>
+
+        <!-- 訂單總結 -->
+        <div class="summary">
+            <p>商品總金額: <span id="totalAmount">$0</span></p>
+            <p>優惠碼折扣: <span id="discountAmount">$0</span></p>
+            <p>運費: <span id="shippingCost">$0</span></p>
+            <p>最終金額: <span id="finalAmount">$0</span></p>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            const totalAmount = parseFloat(localStorage.getItem('checkoutTotal')) || 0;
+            document.getElementById('totalAmount').textContent = `$${totalAmount}`;
+
+            const discountCode = document.getElementById('discountCode').value;
+            let discountAmount = 0;
+            if (discountCode === 'TK888') {
+                discountAmount = 100; // Example discount for the code "TK888"
+            }
+
+            const finalAmount = Math.max(0, totalAmount - discountAmount);
+
+            document.getElementById('discountAmount').textContent = `$${discountAmount.toFixed(2)}`;
+            document.getElementById('finalAmount').textContent = `$${finalAmount.toFixed(2)}`;
+        }
+
+        // 切換領取方式的顯示
+        function togglePickupDetails() {
+            const pickupMethod = document.getElementById('pickupMethod').value;
+            const pickupDetails = document.getElementById('pickupDetails');
+
+            if (pickupMethod === 'storePickup') {
+                pickupDetails.style.display = 'block';
+            } else {
+                pickupDetails.style.display = 'none';
+            }
+
+            updateShippingCost();
+        }
+
+        // 根據領取方式計算運費
+        function updateShippingCost() {
+            const pickupMethod = document.getElementById('pickupMethod').value;
+            let shippingCost = 0;
+
+            switch (pickupMethod) {
+                case 'delivery': // 宅配
+                    shippingCost = 60;
+                    break;
+                case 'convenienceStore': // 超商領取
+                    shippingCost = 30;
+                    break;
+                case 'storePickup': // 實體店面領取
+                    shippingCost = 10;
+                    break;
+                default:
+                    shippingCost = 0;
+            }
+
+            document.getElementById('shippingCost').textContent = `$${shippingCost}`;
+
+            const totalAmount = parseFloat(localStorage.getItem('checkoutTotal')) || 0;
+            const discountAmount = parseFloat(document.getElementById('discountAmount').textContent.replace('$', '')) || 0;
+            const finalAmount = Math.max(0, totalAmount - discountAmount + shippingCost);
+            document.getElementById('finalAmount').textContent = `$${finalAmount.toFixed(2)}`;
+        }
+
+        // 提交訂單
+        function submitOrder() {
+            const discountCode = document.getElementById('discountCode').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const pickupMethod = document.getElementById('pickupMethod').value;
+            const pickupLocation = "桃園市中壢區普忠路206號"; // 固定店面地址
+            const totalAmount = parseFloat(localStorage.getItem('checkoutTotal')) || 0;
+
+            let discountAmount = 0;
+            if (discountCode === 'TK888') {
+                discountAmount = 100;
+            }
+
+            let shippingCost = 0;
+            switch (pickupMethod) {
+                case 'delivery':
+                    shippingCost = 60;
+                    break;
+                case 'convenienceStore':
+                    shippingCost = 30;
+                    break;
+                case 'storePickup':
+                    shippingCost = 10;
+                    break;
+                default:
+                    shippingCost = 0;
+            }
+
+            const finalAmount = Math.max(0, totalAmount - discountAmount + shippingCost);
+
+            // 將資料存入 localStorage
+            localStorage.setItem('paymentMethod', paymentMethod);
+            localStorage.setItem('pickupMethod', pickupMethod);
+            localStorage.setItem('pickupLocation', pickupMethod === 'storePickup' ? pickupLocation : 'N/A');
+            localStorage.setItem('discountAmount', discountAmount);
+            localStorage.setItem('shippingCost', shippingCost);
+            localStorage.setItem('finalAmount', finalAmount);
+
+            // 重定向到確認頁面
+            window.location.href = "file:///F:/%E6%9C%9F%E6%9C%AB%E5%B0%88%E6%A1%88/confirm%20the%20order.html";
+        }
+    </script>
+</body>
+
+</html>

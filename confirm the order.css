@@ -1,0 +1,59 @@
+/* Reset 基本樣式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* 訂單確認主容器樣式 */
+.order-confirmation-container {
+    width: 80%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 標題樣式 */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 訂單詳細資料樣式 */
+.order-details {
+    margin-bottom: 20px;
+}
+
+.order-details p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.order-details strong {
+    font-weight: bold;
+}
+
+/* 按鈕容器樣式 */
+.btn-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* 按鈕樣式 */
+.btn {
+    background-color: #c41f33;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: #a31529;
+}

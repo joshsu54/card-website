@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品展示網站</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 修改樣式 */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #c41f33;
+            padding: 10px 20px;
+        }
+
+        .header-container .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .header-container .nav-left,
+        .header-container .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-container .nav-left button,
+        .header-container .nav-right button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .header-container .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+            display: flex;
+        }
+
+        .header-container .search-bar input {
+            width: 100%;
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .header-container .nav-right {
+            gap: 10px;
+        }
+
+        .header-container .icon {
+            width: 24px;
+            height: 24px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* 添加分類選單樣式 */
+        .category-menu {
+            display: none;
+            background-color: #fff;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .category-menu a {
+            display: block;
+            padding: 8px 12px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .category-menu a:hover {
+            background-color: #f4f4f4;
+        }
+
+        /* 添加關於我按鈕樣式 */
+        .about-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #c41f33;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 商品展示區 */
+        .products-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 30%;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            margin: 10px 0;
+        }
+
+        .btn-secondary {
+            padding: 10px 20px;
+            background-color: #c41f33;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <!-- 左側分類 -->
+            <div class="nav-left">
+                <button class="btn" onclick="toggleCategoryMenu()">☰ 分類</button>
+            </div>
+
+            <!-- 中間搜尋框 -->
+            <div class="search-bar">
+                <input type="text" placeholder="搜尋商品...">
+            </div>
+
+            <!-- 右側圖示 -->
+            <div class="nav-right">
+                <!-- 點擊會員圖示跳轉登入頁面 -->
+                <img src="picture/images__1_-removebg-preview.png" alt="會員登入" class="icon" onclick="redirectToLogin()">
+                <img src="picture/be1d7df358f8dbc9336c5d88403c38c7-removebg-preview.png" alet="購物車" class="icon" onclick="redirectToCart()">
+            </div>
+        </div>
+    </header>
+
+    <!-- 顯示分類的選單 -->
+    <div class="category-menu" id="categoryMenu">
+        <a href="#">男士</a>
+        <a href="#">女士</a>
+        <a href="#">電子產品</a>
+        <a href="#">家居用品</a>
+        <a href="#">書籍</a>
+    </div>
+
+    <!-- Hero 區域 -->
+    <section class="hero">
+        <h1>歡迎來到我們的商城</h1>
+        <p>探索最新的商品和優惠</p>
+        <button class="btn-primary">立即購買</button>
+    </section>
+
+    <!-- 商品展示區域 -->
+    <section class="products-section">
+        <h2>推薦商品</h2>
+        <div class="products-row">
+            <div class="product-card" data-id="1" data-name="商品一" data-price="100">
+                <div class="product-image">圖片一</div>
+                <div class="product-info">
+                    <h3>商品一</h3>
+                    <p>簡單描述商品內容。</p>
+                    <button class="btn-secondary" onclick="addToCart(this)">購買</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="2" data-name="商品二" data-price="200">
+                <div class="product-image">圖片二</div>
+                <div class="product-info">
+                    <h3>商品二</h3>
+                    <p>簡單描述商品內容。</p>
+                    <button class="btn-secondary" onclick="addToCart(this)">購買</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-id="3" data-name="商品三" data-price="300">
+                <div class="product-image">圖片三</div>
+                <div class="product-info">
+                    <h3>商品三</h3>
+                    <p>簡單描述商品內容。</p>
+                    <button class="btn-secondary" onclick="addToCart(this)">購買</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 關於我按鈕 -->
+    <button class="about-btn" onclick="checkForRedirect()">關於我</button>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 My Store. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="#">隱私政策</a></li>
+            <li><a href="#">使用條款</a></li>
+            <li><a href="#">幫助</a></li>
+        </ul>
+    </footer>
+
+    <script>
+        // 顯示或隱藏分類選單
+        function toggleCategoryMenu() {
+            var categoryMenu = document.getElementById("categoryMenu");
+            if (categoryMenu.style.display === "none" || categoryMenu.style.display === "") {
+                categoryMenu.style.display = "block";
+            } else {
+                categoryMenu.style.display = "none";
+            }
+        }
+        //跳轉到購物車畫面
+        function redirectToCart() {
+            window.location.href = "file:///F:/%E6%9C%9F%E6%9C%AB%E5%B0%88%E6%A1%88/shop.html"; // 替換成實際會員登入頁面的路徑
+        }
+        // 假設條件：用戶是否查看過某個典籍
+        function checkForRedirect() {
+            var userHasViewedBook = true;
+            if (userHasViewedBook) {
+                window.location.href = "file:///F:/期末專案/about.html";
+            } else {
+                alert("請先查看我們的商品！");
+            }
+        }
+
+        // 跳轉到會員登入頁面
+        function redirectToLogin() {
+            window.location.href = "file:///F:/%E6%9C%9F%E6%9C%AB%E5%B0%88%E6%A1%88/member.html"; // 替換成實際會員登入頁面的路徑
+        }
+        // 加入購物車功能
+        function addToCart(button) {
+            // 取得商品資訊
+            var productCard = button.closest('.product-card');
+            var productId = productCard.getAttribute('data-id');
+            var productName = productCard.getAttribute('data-name');
+            var productPrice = productCard.getAttribute('data-price');
+
+            // 從 localStorage 取得購物車資料
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // 檢查商品是否已在購物車中
+            var existingProductIndex = cart.findIndex(item => item.id === productId);
+
+            if (existingProductIndex >= 0) {
+                // 如果商品已存在，增加數量
+                cart[existingProductIndex].quantity += 1;
+            } else {
+                // 如果商品不在購物車中，將商品加入購物車
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    quantity: 1
+                });
+            }
+
+            // 更新 localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(productName + ' 已加入購物車！');
+        }
+    </script>
+</body>
+
+</html>

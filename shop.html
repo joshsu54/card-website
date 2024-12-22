@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車</title>
+    <style>
+        .cart-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-total {
+            font-weight: bold;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            background-color: #c41f33;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+        }
+
+        .cart-summary {
+            text-align: right;
+            padding: 10px;
+            border-top: 2px solid #ccc;
+        }
+
+        .checkout-btn {
+            background-color: #c41f33;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cart-container">
+        <h2>我的購物車</h2>
+        <div class="cart-items" id="cartItems">
+            <!-- 購物車項目將動態顯示在這裡 -->
+        </div>
+
+        <div class="cart-summary">
+            <h3>總計</h3>
+            <p id="totalPrice">商品總金額: $0</p>
+            <button class="checkout-btn" onclick="checkout()">結帳</button>
+        </div>
+    </div>
+
+    <script>
+        // 讀取購物車並顯示商品
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cartItems');
+            const totalPriceElement = document.getElementById('totalPrice');
+            let totalPrice = 0;
+
+            // 清空購物車顯示
+            cartItemsContainer.innerHTML = '';
+
+            cart.forEach(item => {
+                // 計算商品總價
+                const itemTotal = item.price * item.quantity;
+                totalPrice += itemTotal;
+
+                // 建立商品元素
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <img src="https://via.placeholder.com/100" alt="${item.name}">
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p>價格: $${item.price}</p>
+                        <div class="quantity">
+                            <button class="quantity-btn" data-id="${item.id}" data-action="-1">-</button>
+                            <input type="number" value="${item.quantity}" min="1" class="quantity-input" id="quantity-${item.id}">
+                            <button class="quantity-btn" data-id="${item.id}" data-action="1">+</button>
+                        </div>
+                    </div>
+                    <p class="item-total">總計: $${itemTotal}</p>
+                    <button class="remove-btn" data-id="${item.id}">移除</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+
+            totalPriceElement.textContent = `商品總金額: $${totalPrice}`;
+
+            // 註冊所有按鈕事件
+            attachEventListeners();
+        }
+
+        // 註冊所有按鈕的事件
+        function attachEventListeners() {
+            // 更新數量的按鈕
+            const quantityBtns = document.querySelectorAll('.quantity-btn');
+            quantityBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    const action = parseInt(this.getAttribute('data-action'));
+                    updateQuantity(id, action);
+                });
+            });
+
+            // 移除商品按鈕
+            const removeBtns = document.querySelectorAll('.remove-btn');
+            removeBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    removeItem(id);
+                });
+            });
+
+            // 數量輸入框的變化
+            const quantityInputs = document.querySelectorAll('.quantity-input');
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const id = this.id.split('-')[1];
+                    const newQuantity = parseInt(this.value);
+                    updateQuantity(id, 0, newQuantity);
+                });
+            });
+        }
+
+        // 更新商品數量
+        function updateQuantity(id, delta, newQuantity = null) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const item = cart.find(item => item.id === id);
+
+            if (newQuantity !== null) {
+                item.quantity = Math.max(1, newQuantity); // 防止數量小於1
+            } else {
+                item.quantity += delta;
+                if (item.quantity < 1) item.quantity = 1; // 防止數量小於1
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+        }
+
+        // 移除商品
+        function removeItem(id) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== id);
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+        }
+
+        // 結帳功能
+        function checkout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+            // 將總金額儲存到 localStorage
+            localStorage.setItem('checkoutTotal', totalPrice);
+
+            // 跳轉到結帳頁面
+            window.location.href = "file:///F:/%E6%9C%9F%E6%9C%AB%E5%B0%88%E6%A1%88/checkout%20page.html";
+        }
+
+        // 頁面加載時加載購物車內容
+        window.onload = loadCart;
+    </script>
+</body>
+
+</html>

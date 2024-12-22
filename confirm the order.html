@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>確認訂單</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .order-confirmation-container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            margin-bottom: 20px;
+        }
+
+        .order-details p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #c41f33;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #a31529;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="order-confirmation-container">
+        <h2>確認訂單</h2>
+
+        <!-- 訂單詳細資料 -->
+        <div class="order-details">
+            <p><strong>付款方式：</strong> <span id="paymentMethod">信用卡</span></p>
+            <p><strong>領取方式：</strong> <span id="pickupMethod">宅配</span></p>
+            <p><strong>領取位置：</strong> <span id="pickupLocation">N/A</span></p>
+            <p><strong>商品總金額：</strong> <span id="totalAmount">$0</span></p>
+            <p><strong>優惠碼折扣：</strong> <span id="discountAmount">$0</span></p>
+            <p><strong>運費：</strong> <span id="shippingCost">$0</span></p>
+            <p><strong>最終金額：</strong> <span id="finalAmount">$0</span></p>
+        </div>
+
+        <!-- 提交確認 -->
+        <div class="btn-container">
+            <a href="success.html" class="btn">確認下單</a>
+        </div>
+    </div>
+
+    <script>
+        // 從 localStorage 加載資料
+        window.onload = function () {
+            const paymentMethod = localStorage.getItem('paymentMethod') || '信用卡';
+            const pickupMethod = localStorage.getItem('pickupMethod') || '宅配';
+            const pickupLocation = localStorage.getItem('pickupLocation') || 'N/A';
+            const totalAmount = parseFloat(localStorage.getItem('checkoutTotal')) || 0;
+            const discountAmount = parseFloat(localStorage.getItem('discountAmount')) || 0;
+            const shippingCost = parseFloat(localStorage.getItem('shippingCost')) || 0;
+            const finalAmount = parseFloat(localStorage.getItem('finalAmount')) || 0;
+
+            document.getElementById('paymentMethod').textContent = paymentMethod;
+            document.getElementById('pickupMethod').textContent = pickupMethod;
+            document.getElementById('pickupLocation').textContent = pickupLocation;
+            document.getElementById('totalAmount').textContent = `$${totalAmount.toFixed(2)}`;
+            document.getElementById('discountAmount').textContent = `$${discountAmount.toFixed(2)}`;
+            document.getElementById('shippingCost').textContent = `$${shippingCost.toFixed(2)}`;
+            document.getElementById('finalAmount').textContent = `$${finalAmount.toFixed(2)}`;
+        }
+    </script>
+</body>
+
+</html>

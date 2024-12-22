@@ -1,0 +1,134 @@
+/* 整體頁面樣式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* 結帳頁面的容器 */
+.checkout-container {
+    width: 80%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 標題樣式 */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* 表單區塊 */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* 輸入框樣式 */
+input[type="text"],
+select,
+input[type="number"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* 按鈕樣式 */
+button {
+    background-color: #c41f33;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+}
+
+/* 按鈕懸停效果 */
+button:hover {
+    background-color: #a4162a;
+}
+
+/* 付款方式選擇區塊 */
+.payment-options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+/* 單一付款方式選項 */
+.payment-options input {
+    width: auto;
+    margin-right: 10px;
+}
+
+/* 訂單總結區塊 */
+.summary {
+    margin-top: 20px;
+    text-align: right;
+    font-size: 18px;
+    color: #333;
+}
+
+.summary p {
+    margin: 5px 0;
+}
+
+/* 商品金額顯示 */
+#totalAmount,
+#discountAmount,
+#finalAmount {
+    font-weight: bold;
+}
+
+/* 輸入框和選擇框 */
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    background-color: #f9f9f9;
+}
+
+input[type="number"] {
+    text-align: center;
+}
+
+/* 表單區域的邊距 */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* 小於 500px 屏幕大小時的響應式調整 */
+@media screen and (max-width: 500px) {
+    .checkout-container {
+        width: 90%;
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .summary {
+        font-size: 16px;
+    }
+}
